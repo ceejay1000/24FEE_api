@@ -20,11 +20,12 @@ type Comment struct {
 	Author string
 }
 
-
 // Defines all the methods the service needs to operate
 type Store interface {
 	GetComment(context.Context, string) (Comment, error)
 	PostComment(context.Context, Comment) (Comment, error)
+	UpdateComment(context.Context, string, Comment) (Comment, error)
+	DeleteComment(context.Context, string) ( error)
 }
 
 // Service - is the struct on which all logic will be build
@@ -53,12 +54,17 @@ func (s *Service) PostComment(ctx context.Context, cmt Comment) error {
 	return ErrorNotImplemented
 }
 
-func (s *Service) UpdateComment(ctx context.Context, cmt Comment) error {
-	return ErrorNotImplemented
+func (s *Service) UpdateComment(ctx context.Context, id string, cmt Comment) (Comment, error) {
+	cmt, err := s.Store.UpdateComment(ctx, id, cmt)
+
+	if err != nil {
+		return Comment{}, err
+	}
+	return cmt, nil
 }
 
-func (s *Service) DeleteComment(ctx context.Context, id string) error {
-	return ErrorNotImplemented
+func (s *Service) DeleteComment(ctx context.Context, id string) ( error) {
+	return  ErrorNotImplemented
 }
 
 func (s *Service) CreateComment(ctx context.Context, cmt Comment) (Comment, error) {
