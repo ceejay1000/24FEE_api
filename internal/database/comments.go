@@ -29,6 +29,12 @@ func (db *Database) GetComment(ctx context.Context, uuid string) (comment.Commen
 
 	var cmtRow CommentRow
 
+	_, err := db.Client.ExecContext(ctx, "SELECT pg_sleep(16)")
+
+	if err != nil {
+		return comment.Comment{}, nil
+	}
+
 	row := db.Client.QueryRowContext(
 		ctx,
 		`SELECT id, slug, body, author 
@@ -36,7 +42,7 @@ func (db *Database) GetComment(ctx context.Context, uuid string) (comment.Commen
 		uuid,
 	)
 
-	err := row.Scan(&cmtRow.ID, &cmtRow.Slug, &cmtRow.Body, &cmtRow.Author)
+	err = row.Scan(&cmtRow.ID, &cmtRow.Slug, &cmtRow.Body, &cmtRow.Author)
 
 	if err != nil {
 		return comment.Comment{}, fmt.Errorf("error fetching the comment by uuid: %w", err)
