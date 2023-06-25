@@ -9,6 +9,10 @@ require (
 	github.com/gorilla/mux v1.7.4
 	github.com/jmoiron/sqlx v1.3.5
 	github.com/lib/pq v1.10.2
+	github.com/sirupsen/logrus v1.9.2
 )
 
-require github.com/docker/docker v24.0.2+incompatible // indirect
+require (
+	github.com/docker/docker v24.0.2+incompatible // indirect
+	golang.org/x/sys v0.8.0 // indirect
+)
